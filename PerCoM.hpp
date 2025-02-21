@@ -1,48 +1,43 @@
 ﻿#ifndef PERCOM_HPP
 #define PERCOM_HPP
-template <class T>
-class __CalculatorBase {
-protected:
-    T r;
-public:
-    constexpr __CalculatorBase(T r) : r(r) {}
-    virtual constexpr T calculate(T n) const = 0;
-};
 
 template <class T>
-class __P_Calculator : public __CalculatorBase<T> {
+class Operator {
+protected:
+    T value;
 public:
-    using __CalculatorBase<T>::__CalculatorBase;
-    constexpr T calculate(T n) const override {
+    Operator(T value) :value(value) {}
+    virtual T operator->*(T r) = 0;
+};
+template <class T>
+class P_Op :public Operator<T> {
+public:
+    using Operator<T>::Operator;
+    T operator->*(T r)override {
         T result = 1;
-        for (T i = 0; i < this->r; ++i) {
-            result *= n - i;
+        for (T i = 0; i < r; ++i) {
+            result *= this->value - i;
         }
         return result;
     }
 };
-
 template <class T>
-class __C_Calculator : public __CalculatorBase<T> {
+class C_Op :public Operator<T> {
 public:
-    using __CalculatorBase<T>::__CalculatorBase;
-    constexpr T calculate(T n) const override {
-        return (__P_Calculator<T>(this->r).calculate(n)) / (__P_Calculator<T>(this->r).calculate(this->r));
+    using Operator<T>::Operator;
+    T operator->*(T r)override {
+        return P_Op(this->value)->*r / P_Op(r)->*r;
     }
 };
-
-template <class T>
-constexpr T operator+(T n, const __CalculatorBase<T>& calc) {
-    return calc.calculate(n);
+template <template <class> class Op>
+class Helper {};
+template <template <class> class Op>
+auto operator->*(auto n, Helper<Op>) {
+    return Op<decltype(n)>(n);
 }
 
-template <template <class> class Calculator>
-class __Helper {
-public:
-    constexpr auto operator*(auto r) {
-        return Calculator<decltype(r)>(r);
-    }
-};
-#define P + __Helper<__P_Calculator>() *
-#define C + __Helper<__C_Calculator>() *
+#define P ->* Helper<P_Op>() ->*
+#define C ->* Helper<C_Op>() ->*
+
+
 #endif
