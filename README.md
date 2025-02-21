@@ -14,8 +14,8 @@ auto main() -> int {
     static_assert(5 C 3 == 10);
 
     // 計算結果を出力
-    std::println("9P4={}", 9 P 4);  // 9P4 = 3024
-    std::println("5C3={}", 5 C 3);  // 5C3 = 10
+    std::println("9P4 = {}", 9 P 4);  // 9P4 = 3024
+    std::println("5C3 = {}", 5 C 3);  // 5C3 = 10
 
     return EXIT_SUCCESS;
 }
