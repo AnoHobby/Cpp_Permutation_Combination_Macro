@@ -1,5 +1,5 @@
 ﻿#ifndef PERCOM_HPP
-#define PRECOM_HPP
+#define PERCOM_HPP
 template <class T>
 class __CalculatorBase {
 protected:
