@@ -1,3 +1,5 @@
+#ifndef PERCOM_HPP
+#define PERCOM_HPP
 ﻿template <class T>
 class __CalculatorBase {
 protected:
@@ -43,3 +45,4 @@ public:
 };
 #define P + __Helper<__P_Calculator>() *
 #define C + __Helper<__C_Calculator>() *
+#endif
