@@ -19,3 +19,7 @@ auto main() -> int {
 
     return EXIT_SUCCESS;
 }
+```
+## ライセンス
+
+このプロジェクトはMITライセンスの下で公開されています。詳細は[LICENSE](./LICENSE)ファイルをご覧ください。
